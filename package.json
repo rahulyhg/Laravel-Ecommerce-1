@@ -12,6 +12,7 @@
     "axios": "^0.15.3",
     "bootstrap-sass": "^3.3.7",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.0.4",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "0.0.15",
     "gulp-uglify": "^2.1.2",
