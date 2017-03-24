@@ -16,4 +16,9 @@ gulp.task('css', function() {
         .pipe(cleanCSS())
         .pipe(gulp.dest('public/css/'));
 });
-gulp.task('default', ['js', 'css'], function(){});
+gulp.task('watch', function() {
+    gulp.watch('resources/assets/js/**/*.js', ['js']);
+    gulp.watch('resources/assets/css/**/*.css', ['css']);
+});
+gulp.task('default', ['watch'], function(){
+});
