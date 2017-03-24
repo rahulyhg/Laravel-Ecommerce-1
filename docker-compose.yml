@@ -1,0 +1,17 @@
+version: '2'
+services:
+    web:
+        build:
+            context: ./build
+            dockerfile: web.dockerfile
+        volumes:
+            - .:/var/www
+        ports:
+            - "8080:80"
+        depends_on:
+            - database
+
+    database: # name of the third service
+        image: mysql # specify image to build container from
+        ports:
+          - "3306:3306" # specify port forewarding
