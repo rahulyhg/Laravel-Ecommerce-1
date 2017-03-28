@@ -1,17 +1,37 @@
 version: '2'
 services:
-    web:
+    nginx:
         build:
-            context: ./build
-            dockerfile: web.dockerfile
+            context: ./
+            dockerfile: build/nginx.dockerfile
         volumes:
-            - .:/var/www
+            - ./:/var/www
         ports:
             - "8080:80"
+        links:
+            - client
+    client:
+        build:
+            context: ./
+            dockerfile: build/client.dockerfile
+        volumes:
+            - ./:/var/www
         depends_on:
             - database
-
-    database: # name of the third service
-        image: mysql # specify image to build container from
+    admin:
+        build:
+            context: ./
+            dockerfile: build/admin.dockerfile
+        environment:
+            - admin_password=*3DFb8DJo7iF3xc7TD
+        volumes:
+            - ./:/var/www/
+        depends_on:
+            - database
+    database:
+        image: mysql:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=wordpress
         ports:
-          - "3306:3306" # specify port forewarding
+            - "3306:3306"
