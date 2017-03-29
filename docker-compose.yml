@@ -1,6 +1,6 @@
 version: '2'
 services:
-    nginx:
+    nginx-admin:
         build:
             context: ./
             dockerfile: build/nginx.dockerfile
@@ -8,7 +8,8 @@ services:
             - ./:/var/www
         ports:
             - "8080:80"
-        links:
+        depends_on:
+            - admin
             - client
     client:
         build:
@@ -22,8 +23,6 @@ services:
         build:
             context: ./
             dockerfile: build/admin.dockerfile
-        environment:
-            - admin_password=*3DFb8DJo7iF3xc7TD
         volumes:
             - ./:/var/www/
         depends_on:

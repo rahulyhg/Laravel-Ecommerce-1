@@ -1,13 +1,17 @@
 FROM php:7.0.0-fpm
 
 # Install sudo and add user
-RUN apt-get update && \
-    apt-get -y install sudo
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+# RUN apt-get update && \
+#    apt-get -y install sudo
+# RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 # Install php for docker and install extensions
 RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client git \
     && docker-php-ext-install mcrypt pdo_mysql mysqli mbstring
+
+# Install nodejs and npm
+RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
+RUN apt-get update && apt-get install -y nodejs build-essential
 
 # Install zip and unzip
 RUN apt-get install -y zip unzip
@@ -21,18 +25,7 @@ RUN php -r "unlink('composer-setup.php');"
 # Make composer globally
 RUN mv composer.phar /usr/local/bin/composer
 
-# Install composer dependencies
+# Install dependencies
 COPY ./Laravel /var/www/Laravel
-# COPY ./Laravel/composer.lock /var/www/Laravel/composer.lock
-# COPY ./Laravel/package.json /var/www/Laravel/package.json
 WORKDIR /var/www/Laravel
-# RUN mkdir -p vendor
-# RUN composer install
-
-# Install npm dependencies
-# USER docker
-RUN curl -sL https://deb.nodesource.com/setup_7.x | bash
-RUN apt-get update && apt-get install -y nodejs build-essential
-# RUN apt-get update && apt-get install -y build-essential libssl-dev
-# RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh
-RUN npm install
+CMD composer install && npm install
