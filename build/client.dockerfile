@@ -1,4 +1,4 @@
-FROM php:7.0.0-fpm
+FROM php:7-fpm
 
 # Install sudo and add user
 # RUN apt-get update && \
@@ -28,4 +28,4 @@ RUN mv composer.phar /usr/local/bin/composer
 # Install dependencies
 COPY ./Laravel /var/www/Laravel
 WORKDIR /var/www/Laravel
-CMD composer install && npm install
+# CMD composer install

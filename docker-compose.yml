@@ -1,9 +1,9 @@
 version: '2'
 services:
-    nginx-admin:
+    apache:
         build:
             context: ./
-            dockerfile: build/nginx.dockerfile
+            dockerfile: build/apache.dockerfile
         volumes:
             - ./:/var/www
         ports:
